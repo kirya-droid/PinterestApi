@@ -1,36 +1,69 @@
 # PinterestApi
+
 This is a wrapper for automating your pinterest account using the Pinterest API.
-## Content
+## Table of Contents
 
-- Introduction
-- Installation
-- Usage
-- Video guide
-
-
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Video Guide](#video-guide)
 ## Introduction
 
-This project implements the functions of obtaining an access token, obtaining board IDs, downloading pins, downloading video pins, using a proxy.
+This project implements the functions of obtaining an access token, obtaining board IDs, downloading pins, downloading video pins.
 ## Installation
 ``` Ruby
 git clone https://github.com/kirya-droid/PinterestApi.git
 ```
 ``` Ruby
-pip install -r requirements.txt
+pip install requests
 ```
 ## Usage
-- Get the Pinterest API: You need to get the Pinterest API https://developers.pinterest.com/apps/
+### Getting the Pinterest API
+You need to get the Pinterest API from https://developers.pinterest.com/apps/
 
-- Paste the data into config.json: Copy the received data and paste it into the config.json file.
+### Inserting Data into Your Config and Authorizing Your Application
+``` python
+config = {
+    'client_id': 'your_client_id',
+    'redirect_url': 'http://localhost:8085',
+    'client_secret': 'your_client_secret'
+}
+pinterest_oauth = PinterestOAuth(config)
+pinterest_oauth.open_auth_url()
+access_token = pinterest_oauth.get_access_token()
+``` 
+### After Receiving the Token, You Can Publish Your Pins
+``` python
+token = "Your_token"
+creator = PinterestPinCreator(token)
+``` 
+### Creating a Pin
+``` python
 
-- Run the main function: Run the main function in the code.
+creator.create_pin(
+         board_id="your board's ID",
+         description="Description of your pin",
+         title="The name of your pin",
+         img_url="image url",
+         link="the link that your pin leads to" 
+     )
+``` 
+### Creating a Video Pin
+``` python
+creator.create_video_pin(
+        board_id="your board's ID",
+        description="Description of your pin,
+        title="The name of your pin",
+        link="the link that your pin leads to",
+        filepath="videoname.mp4",
+        cover_image="cover video.png"
+    )
+```
+### Getting Board ID
 
-- Copy the received link: Copy the received link and paste it into the browser where you have an authorized Pinterest account that you want to automate.
-
-- Authorize the application: After you authorize the application, a code will be indicated in the address bar. This code needs to be copied and pasted into the console.
-
-- Your token has been received!: Your token has been received! It is stored in the account/{owner}/ folder in the file access_token.txt .
-
-## Video guide
+``` python
+creator.get_boards()
+```
+## Video Guide
 
 coming soon
